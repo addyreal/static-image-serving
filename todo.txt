@@ -1,0 +1,9 @@
+	- Control quality of output via config
+	- Webp support
+	- Absolute path to input image
+	- Binary -> cli
+	- Generate output to location of input
+	- Mitigate memory leaks with safe exits
+	- Modularize more
+	- Include libraries locally
+	- (Avif support?)
