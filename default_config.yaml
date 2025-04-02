@@ -1,0 +1,12 @@
+# Default config (auto-generated)
+
+extensions:
+  png: true
+  jpg: true
+  webp: true
+
+sizes:
+  - 768
+  - 384
+
+quality: 90

@@ -1,4 +1,3 @@
-	- Control quality of output via config
 	- Webp support
 	- Absolute path to input image
 	- Binary -> cli

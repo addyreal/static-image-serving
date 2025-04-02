@@ -47,14 +47,13 @@ int main(int argc, char** argv)
 	std::vector<std::thread> threads;
 	threads.reserve(config.extensions.size() * config.sizes.size());
 	
-	// Assuming desired quality is 100%
 	for(std::string extension: config.extensions)
 	{
 		for(unsigned int size: config.sizes)
 		{
 			threads.emplace_back([&, extension, size]()
 			{
-				Image::Convert(input_image, extension, size);
+				Image::Convert(input_image, extension, config.quality, size);
 			});
 		}
 	}

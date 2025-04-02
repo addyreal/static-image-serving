@@ -63,6 +63,17 @@ Config::Config(const std::string& conf_path)
 		}
 		catch(...) {Utils::Assert::exit_if(true, "Config size invalid.");}
 	}
+
+	// Quality
+	Utils::Assert::exit_if(!config["quality"].IsDefined(), "Config conversion quality missing.");
+	Utils::Assert::exit_if(!config["quality"].IsScalar(), "Config conversion quality invalid.");
+	try
+	{
+		Utils::Assert::exit_if(config["quality"].as<unsigned int>() <= 0, "Config conversion quality invalid.");
+		Utils::Assert::exit_if(config["quality"].as<unsigned int>() > 100, "Config conversion quality invalid.");
+		this->quality = config["quality"].as<unsigned int>();
+	}
+	catch(...) {Utils::Assert::exit_if(true, "Config conversion quality invalid.");}
 }
 
 
@@ -81,7 +92,9 @@ void GenerateDefaultConfig()
 	"\n"
 	"sizes:\n"
 	"  - 768\n"
-	"  - 384";
+	"  - 384\n"
+	"\n"
+	"quality: 90";
 	default_config << body;
 	default_config.close();
 }

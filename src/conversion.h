@@ -10,14 +10,14 @@
 namespace Image
 {
 	bool can_be_converted(const char*);
-	void Convert(const char*, std::string, unsigned int);
+	void Convert(const char*, std::string, unsigned int, unsigned int);
 	namespace Png
 	{
 		void Convert(const char*, unsigned int);
 	}
 	namespace Jpg
 	{
-		void Convert(const char*, unsigned int);
+		void Convert(const char*, unsigned int, unsigned int);
 	}
 	namespace Webp
 	{

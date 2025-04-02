@@ -18,4 +18,5 @@ class Config
 	public:
 		std::vector<std::string> extensions;
 		std::vector<unsigned int> sizes;
+		unsigned int quality;
 };

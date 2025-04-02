@@ -9,7 +9,7 @@ bool Image::can_be_converted(const char* filename)
 
 
 
-void Image::Convert(const char* input_file, std::string target_extension, unsigned int target_width)
+void Image::Convert(const char* input_file, std::string target_extension, unsigned int quality, unsigned int target_width)
 {
 	if(target_extension == std::string("png"))
 	{
@@ -17,7 +17,7 @@ void Image::Convert(const char* input_file, std::string target_extension, unsign
 	}
 	else if(target_extension == std::string("jpg"))
 	{
-		Image::Jpg::Convert(input_file, target_width);
+		Image::Jpg::Convert(input_file, quality, target_width);
 	}
 	else if(target_extension == std::string("webp"))
 	{
@@ -57,7 +57,7 @@ void Image::Png::Convert(const char* input_file, unsigned int target_width)
 
 
 
-void Image::Jpg::Convert(const char* input_file, unsigned int target_width)
+void Image::Jpg::Convert(const char* input_file, unsigned int quality, unsigned int target_width)
 {
 	int init_width;
 	int init_height;
@@ -82,7 +82,7 @@ void Image::Jpg::Convert(const char* input_file, unsigned int target_width)
 	int target_height = (int)target_width/init_ratio;
 	unsigned char* target_img = (unsigned char*)malloc(target_width * target_height * init_channels);
 	stbir_resize_uint8_srgb(init_image, init_width, init_height, 0, target_img, target_width, target_height, 0, (stbir_pixel_layout)init_channels);
-	Utils::Assert::exit_if(!stbi_write_jpg(Utils::Files::locate_file(output_file).c_str(), target_width, target_height, init_channels, target_img, 100), "Failed to write converted image.");
+	Utils::Assert::exit_if(!stbi_write_jpg(Utils::Files::locate_file(output_file).c_str(), target_width, target_height, init_channels, target_img, quality), "Failed to write converted image.");
 
 	std::cout << "Success converting to: jpg, width: " << init_width << "->" << target_width << "." << std::endl;
 	stbi_image_free(init_image);
