@@ -17,7 +17,7 @@ add_executable(tool ${SRCS})
 include_directories(${INCLUDE_DIR})
 target_include_directories(tool PRIVATE ${INCLUDE_DIR})
 target_link_directories(tool PRIVATE ${LINK_DIR})
-target_link_libraries(tool PRIVATE yaml-cpp)
+target_link_libraries(tool PRIVATE yaml-cpp webp)
 
 # macro for source dir
 add_definitions(-DPROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}")

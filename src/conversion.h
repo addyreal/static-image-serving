@@ -1,9 +1,11 @@
 #pragma once
 #include "utils.h"
 #include <iostream>
+#include <fstream>
 #include "stb_image.h"
 #include "stb_image_write.h"
 #include "stb_image_resize2.h"
+#include "webp/encode.h"
 
 
 
@@ -21,6 +23,6 @@ namespace Image
 	}
 	namespace Webp
 	{
-		void Convert(const char*, unsigned int);
+		void Convert(const char*, unsigned int, unsigned int);
 	}
 }
