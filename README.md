@@ -11,4 +11,3 @@ cmake ..
 make
 sudo cmake --install .
 ```
-> Looks for and places files in the project directory

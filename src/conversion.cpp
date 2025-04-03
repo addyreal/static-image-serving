@@ -1,5 +1,4 @@
 #include "conversion.h"
-#include "utils.h"
 
 
 
@@ -12,17 +11,19 @@ bool Image::can_be_converted(const char* filename)
 
 void Image::Convert(const char* input_file, std::string target_extension, unsigned int quality, unsigned int target_width)
 {
+	std::filesystem::path temp = (std::filesystem::path)input_file;
+	const char* reintepret_file = temp.c_str();
 	if(target_extension == std::string("png"))
 	{
-		Image::Png::Convert(input_file, target_width);
+		Image::Png::Convert(reintepret_file, target_width);
 	}
 	else if(target_extension == std::string("jpg"))
 	{
-		Image::Jpg::Convert(input_file, quality, target_width);
+		Image::Jpg::Convert(reintepret_file, quality, target_width);
 	}
 	else if(target_extension == std::string("webp"))
 	{
-		Image::Webp::Convert(input_file, quality, target_width);
+		Image::Webp::Convert(reintepret_file, quality, target_width);
 	}
 }
 
@@ -33,7 +34,7 @@ void Image::Png::Convert(const char* input_file, unsigned int target_width)
 	int init_width;
 	int init_height;
 	int init_channels;
-	unsigned char* init_image = stbi_load(Utils::Files::locate_file(input_file).c_str(), &init_width, &init_height, &init_channels, 0);
+	unsigned char* init_image = stbi_load(input_file, &init_width, &init_height, &init_channels, 0);
 
 	Utils::Assert::exit_if(init_image == nullptr, "Failed to open image.");
 	if(target_width > init_width)
@@ -49,7 +50,7 @@ void Image::Png::Convert(const char* input_file, unsigned int target_width)
 	int target_height = (int)target_width/init_ratio;
 	unsigned char* target_img = (unsigned char*)malloc(target_width * target_height * init_channels);
 	stbir_resize_uint8_srgb(init_image, init_width, init_height, 0, target_img, target_width, target_height, 0, (stbir_pixel_layout)init_channels);
-	Utils::Assert::exit_if(!stbi_write_png(Utils::Files::locate_file(output_file).c_str(), target_width, target_height, init_channels, target_img, target_width * init_channels), "Failed to write converted image.");
+	Utils::Assert::exit_if(!stbi_write_png(output_file.c_str(), target_width, target_height, init_channels, target_img, target_width * init_channels), "Failed to write converted image.");
 
 	std::cout << "Success converting to: png, width: " << init_width << "->" << target_width << "." << std::endl;
 	stbi_image_free(init_image);
@@ -63,7 +64,7 @@ void Image::Jpg::Convert(const char* input_file, unsigned int quality, unsigned 
 	int init_width;
 	int init_height;
 	int init_channels;
-	unsigned char* init_image = stbi_load(Utils::Files::locate_file(input_file).c_str(), &init_width, &init_height, &init_channels, 0);
+	unsigned char* init_image = stbi_load(input_file, &init_width, &init_height, &init_channels, 0);
 
 	Utils::Assert::exit_if(init_image == nullptr, "Failed to open image.");
 	if(target_width > init_width)
@@ -83,7 +84,7 @@ void Image::Jpg::Convert(const char* input_file, unsigned int quality, unsigned 
 	int target_height = (int)target_width/init_ratio;
 	unsigned char* target_img = (unsigned char*)malloc(target_width * target_height * init_channels);
 	stbir_resize_uint8_srgb(init_image, init_width, init_height, 0, target_img, target_width, target_height, 0, (stbir_pixel_layout)init_channels);
-	Utils::Assert::exit_if(!stbi_write_jpg(Utils::Files::locate_file(output_file).c_str(), target_width, target_height, init_channels, target_img, quality), "Failed to write converted image.");
+	Utils::Assert::exit_if(!stbi_write_jpg(output_file.c_str(), target_width, target_height, init_channels, target_img, quality), "Failed to write converted image.");
 
 	std::cout << "Success converting to: jpg, width: " << init_width << "->" << target_width << "." << std::endl;
 	stbi_image_free(init_image);
@@ -97,7 +98,7 @@ void Image::Webp::Convert(const char* input_file, unsigned int quality, unsigned
 	int init_width;
 	int init_height;
 	int init_channels;
-	unsigned char* init_image = stbi_load(Utils::Files::locate_file(input_file).c_str(), &init_width, &init_height, &init_channels, 0);
+	unsigned char* init_image = stbi_load(input_file, &init_width, &init_height, &init_channels, 0);
 
 	Utils::Assert::exit_if(init_image == nullptr, "Failed to open image.");
 	if(target_width > init_width)
@@ -130,7 +131,7 @@ void Image::Webp::Convert(const char* input_file, unsigned int quality, unsigned
 	}
 	Utils::Assert::exit_if(!target_webp, "Failed to encode to webp.");
 
-	std::ofstream output(Utils::Files::locate_file(output_file), std::ios::binary);
+	std::ofstream output(output_file.c_str(), std::ios::binary);
 	Utils::Assert::exit_if(!output.is_open(), "Failed to write converted image.");
 	output.write(reinterpret_cast<const char*>(target_webp), target_webp_size);
 	output.close();
