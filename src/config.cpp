@@ -4,15 +4,15 @@
 
 Config::Config(const std::string& conf_path)
 {
-	YAML::Node config;
-
-	// Config
 	Utils::Assert::exit_if(!Utils::Files::file_exists(conf_path.c_str()), "Config missing.");
+	YAML::Node config;
 	try
 	{
 		config = YAML::LoadFile(Utils::Files::locate_file(conf_path));
 	}
 	catch(...) {Utils::Assert::exit_if(true, "Config failed to open.");}
+
+	// Config
 	Utils::Assert::exit_if(!config.IsDefined(), "Config invalid.");
 	Utils::Assert::exit_if(!config.IsMap(), "Config invalid.");
 
@@ -56,9 +56,9 @@ Config::Config(const std::string& conf_path)
 	for(YAML::iterator it = config["sizes"].begin(); it != config["sizes"].end(); it++)
 	{
 		Utils::Assert::exit_if(!it->IsScalar(), "Config size invalid.");
-		Utils::Assert::exit_if(it->as<unsigned int>() == 0, "Config size invalid.");
 		try
 		{
+			Utils::Assert::exit_if(it->as<unsigned int>() == 0, "Config size invalid.");
 			this->sizes.push_back(it->as<unsigned int>());
 		}
 		catch(...) {Utils::Assert::exit_if(true, "Config size invalid.");}
