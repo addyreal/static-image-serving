@@ -1,7 +1,9 @@
-	- Webp support
 	- Absolute path to input image
 	- Generate output to location of input
+	- Handle or quit on input channels not 3 or 4
 	- Mitigate memory leaks with safe exits
-	- Binary -> cli
+	- Exits delete "converted" images (threads get interrupted)
+	- Cli crossplatform
 	- Include libraries locally
 	- (Avif support?)
+	- Webp decoding (is that even useful?)
