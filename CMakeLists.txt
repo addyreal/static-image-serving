@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # ./src, ./external
 set(SRC_DIR ./src)
-set(SRCS ${SRC_DIR}/main.cpp ${SRC_DIR}/utils.cpp ${SRC_DIR}/conversion.cpp ${SRC_DIR}/config.cpp)
+set(SRCS ${SRC_DIR}/main.cpp ${SRC_DIR}/cliinput.cpp ${SRC_DIR}/utils.cpp ${SRC_DIR}/conversion.cpp ${SRC_DIR}/config.cpp)
 set(INCLUDE_DIR ./external/includes)
 set(LINK_DIR ./external/libs)
 

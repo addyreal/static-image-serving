@@ -2,6 +2,40 @@
 
 
 
+bool Utils::CLI::input_is_help(const char* input)
+{
+	return input == std::string("-help") || input == std::string("--help") || input == std::string("-h") || input == std::string("--h");
+}
+
+
+void Utils::Config::GenerateDefaultConfig()
+{
+	std::cout << "Config not provided, using default." << std::endl;
+	std::ofstream default_config(Utils::Files::locate_file("default_config.yaml").c_str());
+	Utils::Assert::exit_if(!default_config.is_open(), "Failed to generate default config.");
+	const char* body =
+	"# Default config (auto-generated)\n"
+	"\n"
+	"#output formats\n"
+	"extensions:\n"
+	"  png: true\n"
+	"  jpg: true\n"
+	"  webp: true\n"
+	"\n"
+	"#output image widths\n"
+	"sizes:\n"
+	"  - 768\n"
+	"  - 384\n"
+	"\n"
+	"#conversion quality (ignored for conversion to png)\n"
+	"quality: 90";
+	default_config << body;
+	default_config.close();
+	Utils::Assert::exit_if(!Utils::Files::file_exists("default_config.yaml"), "Failed to generate default config.");
+}
+
+
+
 #ifdef PROJECT_SOURCE_DIR
 const std::string Utils::Files::get_project_dir()
 {

@@ -8,7 +8,6 @@
 
 
 
-void GenerateDefaultConfig();
 class Config
 {
 	public:

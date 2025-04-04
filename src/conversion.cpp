@@ -19,24 +19,22 @@ bool Image::supported_channels(const char* filename)
 
 
 
-void Image::Convert(const char* input_file, std::string target_extension, unsigned int quality, unsigned int target_width)
+void Image::Convert(const char* input_image, std::string target_extension, unsigned int quality, unsigned int target_width)
 {
-	std::filesystem::path temp = (std::filesystem::path)input_file;
-	const char* reintepret_file = temp.c_str();
-
-	Utils::Assert::exit_if(!Image::supported_channels(reintepret_file), "Image channels not 3 or 4.");
+	std::filesystem::path temp = (std::filesystem::path)input_image;
+	const char* input_file = temp.c_str();
 
 	if(target_extension == std::string("png"))
 	{
-		Image::Png::Convert(reintepret_file, target_width);
+		Image::Png::Convert(input_file, target_width);
 	}
 	else if(target_extension == std::string("jpg"))
 	{
-		Image::Jpg::Convert(reintepret_file, quality, target_width);
+		Image::Jpg::Convert(input_file, quality, target_width);
 	}
 	else if(target_extension == std::string("webp"))
 	{
-		Image::Webp::Convert(reintepret_file, quality, target_width);
+		Image::Webp::Convert(input_file, quality, target_width);
 	}
 }
 

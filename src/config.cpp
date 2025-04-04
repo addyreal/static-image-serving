@@ -75,29 +75,3 @@ Config::Config(const std::string& conf_path)
 	}
 	catch(...) {Utils::Assert::exit_if(true, "Config conversion quality invalid.");}
 }
-
-
-
-void GenerateDefaultConfig()
-{
-	std::ofstream default_config(Utils::Files::locate_file("default_config.yaml").c_str());
-	Utils::Assert::exit_if(!default_config.is_open(), "Failed to generate default config.");
-	const char* body =
-	"# Default config (auto-generated)\n"
-	"\n"
-	"#output formats\n"
-	"extensions:\n"
-	"  png: true\n"
-	"  jpg: true\n"
-	"  webp: true\n"
-	"\n"
-	"#output image widths\n"
-	"sizes:\n"
-	"  - 768\n"
-	"  - 384\n"
-	"\n"
-	"#conversion quality (ignored for conversion to png)\n"
-	"quality: 90";
-	default_config << body;
-	default_config.close();
-}

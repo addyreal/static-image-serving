@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <cstring>
+#include <fstream>
 #include <iostream>
 #include <filesystem>
 
@@ -8,6 +9,14 @@
 
 namespace Utils
 {
+	namespace CLI
+	{
+		bool input_is_help(const char*);
+	}
+	namespace Config
+	{
+		void GenerateDefaultConfig();
+	}
 	namespace Files
 	{
 		const std::string get_project_dir();
