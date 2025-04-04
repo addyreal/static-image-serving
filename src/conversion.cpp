@@ -1,10 +1,20 @@
 #include "conversion.h"
+#include "utils.h"
 
 
 
-bool Image::can_be_converted(const char* filename)
+bool Image::supported_format(const char* filename)
 {
 	return Utils::Files::file_has_extension(filename, ".jpg") || Utils::Files::file_has_extension(filename, ".png");
+}
+
+
+
+bool Image::supported_channels(const char* filename)
+{
+	int width, height, channels;
+	Utils::Assert::exit_if(!stbi_info(filename, &width, &height, &channels), "Failed to access input image.");
+	return channels == 3 || channels == 4;
 }
 
 
@@ -13,6 +23,9 @@ void Image::Convert(const char* input_file, std::string target_extension, unsign
 {
 	std::filesystem::path temp = (std::filesystem::path)input_file;
 	const char* reintepret_file = temp.c_str();
+
+	Utils::Assert::exit_if(!Image::supported_channels(reintepret_file), "Image channels not 3 or 4.");
+
 	if(target_extension == std::string("png"))
 	{
 		Image::Png::Convert(reintepret_file, target_width);

@@ -85,15 +85,18 @@ void GenerateDefaultConfig()
 	const char* body =
 	"# Default config (auto-generated)\n"
 	"\n"
+	"#output formats\n"
 	"extensions:\n"
 	"  png: true\n"
 	"  jpg: true\n"
 	"  webp: true\n"
 	"\n"
+	"#output image widths\n"
 	"sizes:\n"
 	"  - 768\n"
 	"  - 384\n"
 	"\n"
+	"#conversion quality (ignored for conversion to png)\n"
 	"quality: 90";
 	default_config << body;
 	default_config.close();

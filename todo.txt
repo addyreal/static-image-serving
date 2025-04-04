@@ -1,4 +1,3 @@
-	- Handle or quit on input channels not 3 or 4
 	- Mitigate memory leaks with safe exits
 	- Exits delete "converted" images (threads get interrupted)
 	- Cli crossplatform

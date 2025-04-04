@@ -41,7 +41,7 @@ int main(int argc, char** argv)
 		}
 	}
 
-	Utils::Assert::exit_if(!Image::can_be_converted(input_image), "Input image is of unsupported format.");
+	Utils::Assert::exit_if(!Image::supported_format(input_image), "Input image is of unsupported format.");
 	Config config(input_config);
 
 	std::vector<std::thread> threads;

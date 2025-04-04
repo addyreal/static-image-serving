@@ -12,7 +12,9 @@
 
 namespace Image
 {
-	bool can_be_converted(const char*);
+	bool supported_format(const char*);
+	bool supported_channels(const char*);
+	
 	void Convert(const char*, std::string, unsigned int, unsigned int);
 	namespace Png
 	{
