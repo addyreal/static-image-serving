@@ -18,6 +18,11 @@ int main(int argc, char** argv)
 	{
 		case 2:
 		{
+			if(argv[1] == std::string("-help") || argv[1] == std::string("--help") || argv[1] == std::string("-h") || argv[1] == std::string("--h"))
+			{
+				std::cout << "Usage: static-image-convert <image> [config]\n\nArguments:\n  <image>    Path to the input image (required)\n  [config]   Config located in the project directory (optional)\n\nExamples:\n  static-img-convert ../image.jpg myconfig.yaml\n  static-img-convert hello.png" << std::endl;
+				return 0;
+			}
 			std::cout << "Config not provided, using default." << std::endl;
 			Utils::Assert::exit_if(!std::filesystem::exists((std::filesystem::path)argv[1]), "Provided image DNE.");
 			GenerateDefaultConfig();
@@ -36,7 +41,8 @@ int main(int argc, char** argv)
 		}
 		default:
 		{
-			Utils::Assert::exit_if(true, "Usage: static-image-convert {image} ({config}optional). \nLooks for config in project dir.");
+			std::cout << "Usage: static-image-convert <image> [config]\n\nArguments:\n  <image>    Path to the input image (required)\n  [config]   Config located in the project directory (optional)\n\nExamples:\n  static-img-convert ../image.jpg myconfig.yaml\n  static-img-convert hello.png" << std::endl;
+			return 0;
 			break;
 		}
 	}
