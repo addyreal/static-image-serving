@@ -1,3 +1,4 @@
+	- flag to set dir where looks for config, show as well to list it out, print 'changing from to', user can then delete configs (default) from 'from'
 	- Mitigate memory leaks with safe exits
 	- Exits delete "converted" images (threads get interrupted)
 	- Cli crossplatform
