@@ -8,7 +8,7 @@ Config::Config(const std::string& conf_path)
 	YAML::Node config;
 	try
 	{
-		config = YAML::LoadFile(Utils::Files::locate_file(conf_path));
+		config = YAML::LoadFile(Utils::Files::get_proper_path(conf_path));
 	}
 	catch(...) {Utils::Assert::exit_if(true, "Config failed to open.");}
 

@@ -11,7 +11,7 @@ bool Utils::CLI::input_is_help(const char* input)
 void Utils::Config::GenerateDefaultConfig()
 {
 	std::cout << "Config not provided, using default." << std::endl;
-	std::ofstream default_config(Utils::Files::locate_file("default_config.yaml").c_str());
+	std::ofstream default_config(Utils::Files::get_proper_path("default_config.yaml").c_str());
 	Utils::Assert::exit_if(!default_config.is_open(), "Failed to generate default config.");
 	const char* body =
 	"# Default config (auto-generated)\n"
@@ -37,12 +37,12 @@ void Utils::Config::GenerateDefaultConfig()
 
 
 #ifdef PROJECT_SOURCE_DIR
-const std::string Utils::Files::get_project_dir()
+const std::string Utils::Files::get_root_dir()
 {
 	return std::string(PROJECT_SOURCE_DIR);
 }
 #else
-const std::string Utils::Files::get_project_dir()
+const std::string Utils::Files::get_root_dir()
 {
 	std::cout << "Error, missing macro from CMake." << std::endl;
 	exit(1);
@@ -51,16 +51,16 @@ const std::string Utils::Files::get_project_dir()
 
 
 
-const std::string Utils::Files::locate_file(const std::string& rel_path)
+const std::string Utils::Files::get_proper_path(const std::string& rel_path)
 {
-	return get_project_dir() + "/" + rel_path;
+	return get_root_dir() + "/" + rel_path;
 }
 
 
 
-bool Utils::Files::file_exists(const char * rel_path)
+bool Utils::Files::file_exists(const char * proper_path)
 {
-	return std::filesystem::exists(locate_file(rel_path));
+	return std::filesystem::exists(get_proper_path(proper_path));
 }
 
 

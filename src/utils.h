@@ -19,8 +19,8 @@ namespace Utils
 	}
 	namespace Files
 	{
-		const std::string get_project_dir();
-		const std::string locate_file(const std::string& rel_path);
+		const std::string get_root_dir();
+		const std::string get_proper_path(const std::string& rel_path);
 		bool file_exists(const char* rel_path);
 		bool file_has_extension(const char*, const char*);
 		std::string strip_extension(const std::string&);

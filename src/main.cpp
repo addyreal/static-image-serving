@@ -15,15 +15,14 @@ int main(int argc, char** argv)
 	CLI CLIParse(argc, argv);
 
 	const char* input_image = CLIParse.GetImage();
+		Utils::Assert::exit_if(!Image::supported_format(input_image), "Input image is of unsupported format.");
+		Utils::Assert::exit_if(!Image::supported_channels(input_image), "Input image is of unsupported channels.");
 	const char* input_config = CLIParse.GetConfig();
-
-	Utils::Assert::exit_if(!Image::supported_format(input_image), "Input image is of unsupported format.");
-	Utils::Assert::exit_if(!Image::supported_channels(input_image), "Input image is of unsupported channels.");
-
-	Config config(input_config);
+		Config config(input_config);
 
 	std::vector<std::thread> threads;
-	threads.reserve(config.extensions.size() * config.sizes.size());
+		std::cout << "[ ] Conversions pending: " << config.extensions.size() * config.sizes.size() << "." << std::endl;
+		threads.reserve(config.extensions.size() * config.sizes.size());
 
 	for(std::string extension: config.extensions)
 	{
@@ -35,7 +34,7 @@ int main(int argc, char** argv)
 			});
 		}
 	}
-
+	
 	for(std::thread& thread: threads)
 	{
 		thread.join();
